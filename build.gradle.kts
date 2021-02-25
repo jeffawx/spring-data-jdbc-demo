@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.4.30"
 	kotlin("plugin.spring") version "1.4.30"
+	kotlin("kapt") version "1.4.30"
 }
 
 group = "com.airwallex"
@@ -12,6 +13,11 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
+	maven("https://artistry.airwallex.com/repository/lib-release/libs-release-local") {
+		content {
+			includeGroupByRegex("com\\.airwallex.*")
+		}
+	}
 	mavenCentral()
 }
 
@@ -20,6 +26,11 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	// spring data jdbc utility libraries
+	implementation("com.airwallex.common.jdbc:spring-data:1.0.0")
+	testImplementation("com.airwallex.common.jdbc:spring-data-test:1.0.0")
+	kapt("com.airwallex.common.jdbc:spring-data-processor:1.0.0")
 }
 
 tasks.withType<KotlinCompile> {
