@@ -2,11 +2,11 @@ package com.airwallex.demo
 
 import com.airwallex.db.repo.BaseRepository.Companion.DEFAULT_SORT
 import com.airwallex.db.repo.BaseRepositoryTest
+import java.math.BigDecimal
+import java.util.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.data.domain.PageRequest
-import java.math.BigDecimal
-import java.util.UUID
 
 class PaymentRepositoryTest : BaseRepositoryTest<PaymentRepository>() {
 
@@ -35,7 +35,7 @@ class PaymentRepositoryTest : BaseRepositoryTest<PaymentRepository>() {
             )
         }
 
-        val page = repo.findByAccountIdAndStatusWithPageable(
+        val page = repo.findByAccountIdAndStatus(
             accountId, PaymentStatus.NEW,
             PageRequest.of(1, 2, DEFAULT_SORT)
         )
