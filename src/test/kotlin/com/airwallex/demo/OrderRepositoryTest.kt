@@ -1,5 +1,6 @@
 package com.airwallex.demo
 
+import com.airwallex.db.fsm.TransitionNotAllowedException
 import com.airwallex.db.repo.BaseRepositoryTest
 import com.airwallex.demo.OrderAction.PAY
 import com.airwallex.demo.OrderAction.REFUND
@@ -10,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class OrderRepositoryTest : BaseRepositoryTest<OrderRepository>() {
 
@@ -24,6 +26,7 @@ class OrderRepositoryTest : BaseRepositoryTest<OrderRepository>() {
         val paidOrder = repo.execute(orderId, PAY)
         assertThat(paidOrder.status).isEqualTo(PAID)
         assertFalse(paidOrder.canExecute(REFUND)) // non-refundable by default
+        assertThrows<TransitionNotAllowedException> { repo.execute(orderId, REFUND) }
 
         paidOrder.metadata.add("refundable", "true")
         val refundableOrder = repo.save(paidOrder)

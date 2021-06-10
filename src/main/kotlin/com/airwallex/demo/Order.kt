@@ -21,7 +21,7 @@ class Order(
     transitions { // valid state transitions
         +(NEW to PAID by PAY)
         +(NEW to CANCELLED by CANCEL)
-        +(PAID to REFUNDED by REFUND onlyIf {
+        +(PAID to REFUNDED by REFUND onlyIf { // transition guard
             metadata["refundable"] == "true"
         })
     }
