@@ -14,3 +14,14 @@ CREATE TABLE payment
     last_update  timestamptz NOT NULL,
     version      bigint      NOT NULL DEFAULT 1
 );
+
+CREATE TABLE "order"
+(
+    id          uuid PRIMARY KEY     DEFAULT uuid_generate_v4(),
+    status      text        NOT NULL,
+    amount      decimal     NOT NULL,
+    metadata    jsonb,
+    create_time timestamptz NOT NULL,
+    last_update timestamptz NOT NULL,
+    version     bigint      NOT NULL DEFAULT 1
+);
