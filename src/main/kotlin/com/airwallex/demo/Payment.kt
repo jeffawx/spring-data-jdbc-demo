@@ -3,13 +3,15 @@ package com.airwallex.demo
 import com.airwallex.db.converter.JsonField
 import com.airwallex.db.model.BaseEntity
 import com.airwallex.db.repo.BaseRepository
+import java.math.BigDecimal
+import java.util.*
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.relational.core.mapping.Embedded
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
-import java.math.BigDecimal
-import java.util.UUID
 
 enum class PaymentStatus { NEW, COMPLETED }
 data class CurrencyAmount(val ccy: String, val amount: BigDecimal)
@@ -21,13 +23,15 @@ class Payment(
     val reference: String,
     @JsonField val payer: Payer?,
     @JsonField val bankAccount: BankAccount?,
-    accountId: UUID
-) : BaseEntity<Payment, PaymentStatus>(PaymentStatus.NEW, accountId)
+    val accountId: UUID
+) : BaseEntity<Payment, PaymentStatus>(PaymentStatus.NEW)
 
 @Repository
 interface PaymentRepository : BaseRepository<Payment, PaymentStatus>, MyOperations {
 
     fun findByReference(reference: String): List<Payment>
+
+    fun findByAccountIdAndStatus(accountId: UUID, status: PaymentStatus, pageable: Pageable): Page<Payment>
 
     @Query("select * from payment where payer->>'name' = :name")
     fun findByPayerName(name: String): List<Payment>

@@ -72,6 +72,6 @@ class PaymentRepositoryTest : BaseRepositoryTest<PaymentRepository>() {
         val updated = repo.updateById(payment.id!!) {
             changeStatus(PaymentStatus.COMPLETED)
         }
-        assertThat(updated!!.getStatus()).isEqualTo(PaymentStatus.COMPLETED)
+        assertThat(updated.status).isEqualTo(PaymentStatus.COMPLETED)
     }
 }
