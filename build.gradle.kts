@@ -25,9 +25,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("org.flywaydb:flyway-core")
-    implementation("com.airwallex.common.jdbc:spring-data:1.1.1")
-    testImplementation("com.airwallex.common.jdbc:spring-data-test:1.1.1")
-    kapt("com.airwallex.common.jdbc:spring-data-processor:1.1.1")
+    implementation("com.airwallex.common.jdbc:spring-data:1.1.2")
+    testImplementation("com.airwallex.common.jdbc:spring-data-test:1.1.2")
+    kapt("com.airwallex.common.jdbc:spring-data-processor:1.1.2")
 }
 
 tasks.withType<KotlinCompile> {

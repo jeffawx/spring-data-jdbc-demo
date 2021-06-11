@@ -19,9 +19,9 @@ class Order(
 ) : TransitionAwareEntity<Order, OrderStatus>(
     NEW, // initial state
     transitions { // valid state transitions
-        +(NEW to PAID by PAY)
-        +(NEW to CANCELLED by CANCEL)
-        +(PAID to REFUNDED by REFUND onlyIf { // transition guard
+        +(NEW to PAID on PAY)
+        +(NEW to CANCELLED on CANCEL)
+        +(PAID to REFUNDED on REFUND onlyIf { // transition guard
             metadata["refundable"] == "true"
         })
     }
