@@ -20,7 +20,7 @@ class OrderRepositoryTest : BaseRepositoryTest<OrderRepository>() {
         val order = repo.save(Order(BigDecimal.TEN))
         val orderId = order.id!!
 
-        assertThat(order.nextTransitions()).hasSize(2) // PAY & CANCEL
+        assertThat(order.nextTransitions).hasSize(2) // PAY & CANCEL
         assertTrue(order.canExecute(PAY))
 
         val paidOrder = repo.execute(orderId, PAY)
